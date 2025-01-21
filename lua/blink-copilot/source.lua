@@ -76,7 +76,6 @@ function M:get_completions(_ctx, resolve)
 	end
 
 	local current_state = get_current_editor_state()
-	vim.notify(vim.inspect(current_state))
 	if vim.deep_equal(current_state, self.context.target) then
 		resolve({
 			is_incomplete_forward = false,
