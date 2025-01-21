@@ -1,8 +1,10 @@
 # blink-copilot
 
-Configurable multi-backend supported Copilot [blink.cmp](https://github.com/Saghen/blink.cmp) completion source.
+<!-- markdownlint-disable no-inline-html -->
 
-![sample](https://github.com/user-attachments/assets/94ba611a-12d9-4aba-bb97-ad8a433a47ad)
+Configurable multi-backend supported GitHub Copilot source for [blink.cmp](https://github.com/Saghen/blink.cmp).
+
+![Completion Sample](https://github.com/user-attachments/assets/94ba611a-12d9-4aba-bb97-ad8a433a47ad)
 
 ## 📋 Requirements
 
@@ -10,14 +12,31 @@ Configurable multi-backend supported Copilot [blink.cmp](https://github.com/Sagh
 
 ## 🌟 Key Features
 
-1. Fully async `blink.cmp` integration for seamless completion.
-2. Superior Unicode handling for better character compatibility.
-3. Auto LSP client switching on buffer changes for smooth workflows.
+1. Fully async `blink.cmp` integration.
+2. Superior unicode handling for better character compatibility.
+3. Smarter LSP client detecting on buffer switching.
 4. Customizable completion candidates for maximum flexibility.
 5. Latest LSP API with minimal processing for faster results.
 6. Rewritten native LSP interaction for high-speed, low-resource performance.
 7. Enhanced preview with smart indentation and snippet optimization.
-8. Support both `copilot.lua` and Official `copilot.vim` for compliant environments.
+8. Support both `copilot.lua` and official `copilot.vim` as backend (LSP Provider).
+
+## ⚙️ Configuration
+
+Here is the default configuration for `blink-copilot`:
+
+> [!NOTE]
+> Sometimes Copilot do not provide any completions, even you set `max_completions`
+> to a large number. This is a limitation of Copilot itself, not the plugin.
+
+```lua
+{
+  -- Maximum number of completions to show
+  max_completions = 3,
+  -- Maximum number of attempts to fetch completions
+  max_attempts = 5,
+}
+```
 
 ## 🥘 Recipes
 
@@ -26,7 +45,10 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim](h
 ### Without LazyVim
 
 <details>
-<summary><code>blink-copilot</code> + <code>zbirenbaum/copilot.lua</code> (Third-party GitHub Copilot written in Lua)</summary>
+<summary>
+    <code>blink-copilot</code> + <code>zbirenbaum/copilot.lua</code>
+    (Third-party GitHub Copilot written in Lua)
+</summary>
 
 ```lua
 {
@@ -74,7 +96,10 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim](h
 </details>
 
 <details>
-<summary><code>blink-copilot</code> + <code>github/copilot.vim</code> (Official GitHub Copilot Vim/Neovim Plugin)</summary>
+<summary>
+    <code>blink-copilot</code> + <code>github/copilot.vim</code>
+    (Official GitHub Copilot Vim/Neovim Plugin)
+</summary>
 
 ```lua
 {
@@ -134,7 +159,11 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim](h
 ### LazyVim
 
 <details>
-<summary>Use <code>blink-copilot</code> to replace <code>blink-cmp-copilot</code> in LazyVim extra <a href="https://www.lazyvim.org/extras/ai/copilot">copilot</a></summary>
+<summary>
+    Use <code>blink-copilot</code> to replace <code>blink-cmp-copilot</code>
+    in LazyVim extra
+    <a href="https://www.lazyvim.org/extras/ai/copilot">copilot</a>
+</summary>
 
 ```lua
 { import = "lazyvim.plugins.extras.ai.copilot" },
@@ -208,7 +237,7 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim](h
 - [zbirenbaum/copilot-cmp](https://github.com/zbirenbaum/copilot-cmp) -
   The copilot.lua source for nvim-cmp.
 - [giuxtaposition/blink-cmp-copilot](https://github.com/giuxtaposition/blink-cmp-copilot) -
-  The cmp source for blink-cmp.
+  The copilot.lua source for blink-cmp.
 
 ## 🪪 License
 
