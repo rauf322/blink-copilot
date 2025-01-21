@@ -2,6 +2,8 @@
 
 Configurable multi-backend supported Copilot [blink.cmp](https://github.com/Saghen/blink.cmp) completion source.
 
+![sample](https://github.com/user-attachments/assets/94ba611a-12d9-4aba-bb97-ad8a433a47ad)
+
 ## 📋 Requirements
 
 - Neovim >= 0.9.0
