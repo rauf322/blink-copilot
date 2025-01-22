@@ -344,6 +344,6 @@ MIT
 [lazy-nvim-github]: https://github.com/folke/lazy.nvim
 [blink-cmp-github]: https://github.com/Saghen/blink.cmp
 [cmp-copilot-github]: https://github.com/hrsh7th/cmp-copilot
-[copilot-cmp-github]: https://github.com/hrsh7th/cmp-copilot
+[copilot-cmp-github]: https://github.com/zbirenbaum/copilot-cmp
 [blink-cmp-copilot-github]: https://github.com/giuxtaposition/blink-cmp-copilot
 [kind-icon-doc]: https://github.com/giuxtaposition/blink-cmp-copilot?tab=readme-ov-file#copilot-kind-icon
