@@ -3,13 +3,14 @@ local config = require("blink-copilot.config")
 
 local M = {}
 
+---Create a new instance of the completion provider
 function M.new()
 	local src = source:new()
 
 	vim.api.nvim_create_autocmd({ "FileType", "BufUnload" }, {
 		pattern = "*",
 		callback = function()
-			src:update_lsp_client()
+			src:detect_lsp_client()
 		end,
 	})
 

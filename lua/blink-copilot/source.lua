@@ -3,7 +3,8 @@ local config = require("blink-copilot.config")
 
 local M = {}
 
-function M:update_lsp_client()
+---Detect the LSP client
+function M:detect_lsp_client()
 	if self.client and not self.client.is_stopped() then
 		return
 	end
@@ -15,7 +16,7 @@ end
 
 ---The constructor for the completion provider
 function M:new()
-	self:update_lsp_client()
+	self:detect_lsp_client()
 	self:reset()
 	return setmetatable({}, { __index = self })
 end
@@ -68,9 +69,9 @@ function M:add_new_completions(items)
 end
 
 ---Implement the get_completions method of the completion provider
----@param _ctx blink.cmp.Context
+---@param _ blink.cmp.Context
 ---@param resolve fun(self: blink.cmp.CompletionResponse): nil
-function M:get_completions(_ctx, resolve)
+function M:get_completions(_, resolve)
 	if not self.client then
 		return
 	end

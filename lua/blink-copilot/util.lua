@@ -15,6 +15,7 @@ function M.cancel_request(client, req_id)
 	end
 end
 
+---Get the LSP params for the first completion
 function M.get_lsp_params()
 	return vim.tbl_deep_extend("force", vim.lsp.util.make_position_params(0, "utf-16"), {
 		formattingOptions = {
@@ -65,7 +66,7 @@ end
 ---Remove the common indent from the text
 ---@param text string
 ---@return string
-function M.remove_common_indent(text)
+function M.deindent(text)
 	local lines = vim.split(text, "\n")
 
 	-- Cleanup the empty lines
@@ -133,10 +134,10 @@ function M.lsp_completion_items_to_blink_items(completions)
 	local items = {}
 
 	for _, completion in ipairs(completions) do
-		-- The original range is the cursor position, so we need to adjust it
+		-- The original range is the cursor position, so we need to update it to the end of the line
 		completion.range["end"].character = M.length_of_first_line(completion.insertText)
 
-		local dedented_text = M.remove_common_indent(completion.insertText)
+		local dedented_text = M.deindent(completion.insertText)
 
 		table.insert(items, {
 			label = dedented_text,
