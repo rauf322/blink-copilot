@@ -53,6 +53,50 @@
 
 ## ⚙️ Configuration
 
+`blink-copilot` seamlessly integrates with both `blink.cmp` source options and
+Neovim plugin configurations. For most users, simply configuring the options
+within `sources.provider.copilot.opts` is sufficient.
+
+<details>
+
+<summary><i>Explore the configuration in detail</i></summary>
+
+```lua
+{
+  "saghen/blink.cmp",
+  optional = true,
+  dependencies = {
+    "fang2hou/blink-copilot",
+    opts = {
+      max_completions = 1,  -- Global default for max completions
+      max_attempts = 2,     -- Global default for max attempts
+    }
+  },
+  opts = {
+    sources = {
+      default = { "copilot" },
+      providers = {
+        copilot = {
+          name = "copilot",
+          module = "blink-copilot"
+          score_offset = 100,
+          async = true,
+          opts = {
+            -- Local options override global ones
+            -- Final settings: max_completions = 3, max_attempts = 2
+            max_completions = 3,  -- Override global max_completions
+          }
+        },
+      },
+    },
+  },
+}
+```
+
+</details>
+
+---
+
 Here is the default configuration for `blink-copilot`:
 
 ```lua
@@ -109,10 +153,7 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
 {
   "saghen/blink.cmp",
   optional = true,
-  dependencies = {
-    "fang2hou/blink-copilot",
-    opts = {},
-  },
+  dependencies = { "fang2hou/blink-copilot" },
   opts = {
     sources = {
       default = { "copilot" },
@@ -122,6 +163,10 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
           module = "blink-copilot",
           score_offset = 100,
           async = true,
+          opts = {
+            max_completions = 3,
+            max_attempts = 4,
+          }
         },
       },
     },
@@ -158,10 +203,7 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
 },
 {
   "saghen/blink.cmp",
-  dependencies = {
-    "fang2hou/blink-copilot",
-    opts = {},
-  },
+  dependencies = { "fang2hou/blink-copilot" },
   opts = {
     sources = {
       default = { "copilot" },
@@ -171,6 +213,10 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
           module = "blink-copilot",
           score_offset = 100,
           async = true,
+          opts = {
+            max_completions = 3,
+            max_attempts = 4,
+          }
         },
       },
     },
@@ -193,15 +239,16 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
 },
 {
   "saghen/blink.cmp",
-  dependencies = {
-    "fang2hou/blink-copilot",
-    opts = {},
-  },
+  dependencies = { "fang2hou/blink-copilot" },
   opts = {
     sources = {
       providers = {
         copilot = {
           module = "blink-copilot",
+          opts = {
+            max_completions = 3,
+            max_attempts = 4,
+          }
         },
       },
     },
@@ -243,6 +290,10 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
 ```
 
 </details>
+
+### Others
+
+- [Add Copilot kind icon to completion items][kind-icon-doc]
 
 ## 📚 Frequently Asked Questions
 
@@ -295,3 +346,4 @@ MIT
 [cmp-copilot-github]: https://github.com/hrsh7th/cmp-copilot
 [copilot-cmp-github]: https://github.com/hrsh7th/cmp-copilot
 [blink-cmp-copilot-github]: https://github.com/giuxtaposition/blink-cmp-copilot
+[kind-icon-doc]: https://github.com/giuxtaposition/blink-cmp-copilot?tab=readme-ov-file#copilot-kind-icon
