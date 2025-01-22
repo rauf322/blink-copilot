@@ -4,8 +4,9 @@ local config = require("blink-copilot.config")
 local M = {}
 
 ---Create a new instance of the completion provider
-function M.new()
-	local src = source:new()
+---@param opts Config
+function M.new(opts)
+	local src = source:new(opts)
 
 	vim.api.nvim_create_autocmd({ "LspAttach" }, {
 		callback = function()

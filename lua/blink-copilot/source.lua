@@ -15,10 +15,13 @@ function M:detect_lsp_client()
 end
 
 ---The constructor for the completion provider
-function M:new()
+---@param opts Config
+function M:new(opts)
 	self:detect_lsp_client()
 	self:reset()
-	return setmetatable({}, { __index = self })
+	return setmetatable({
+		config = vim.tbl_deep_extend("force", config.options, opts),
+	}, { __index = self })
 end
 
 ---Get the current editor state
@@ -136,10 +139,7 @@ function M:get_completions(_, resolve)
 		-- Attempt to get more completions
 		lsp_params = util.to_cycling_lsp_params(lsp_params)
 		local attempts_made = 0
-		while
-			#self.context.completions < config.options.max_completions
-			and attempts_made < config.options.max_attempts
-		do
+		while #self.context.completions < self.config.max_completions and attempts_made < self.config.max_attempts do
 			attempts_made = attempts_made + 1
 			if send_completion_request(false) then
 				process_and_resolve_items()
