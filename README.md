@@ -187,6 +187,10 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
 ```lua
 { import = "lazyvim.plugins.extras.ai.copilot" },
 {
+  "giuxtaposition/blink-cmp-copilot",
+  enabled = false,
+},
+{
   "saghen/blink.cmp",
   dependencies = {
     "fang2hou/blink-copilot",
