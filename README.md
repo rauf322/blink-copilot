@@ -106,10 +106,7 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
   optional = true,
   dependencies = {
     "fang2hou/blink-copilot",
-    opts = {
-      max_completions = 3,
-      max_attempts = 5,
-    },
+    opts = {},
   },
   opts = {
     sources = {
@@ -160,10 +157,7 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
   "saghen/blink.cmp",
   dependencies = {
     "fang2hou/blink-copilot",
-    opts = {
-      max_completions = 3,
-      max_attempts = 5,
-    },
+    opts = {},
   },
   opts = {
     sources = {
@@ -196,10 +190,7 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
   "saghen/blink.cmp",
   dependencies = {
     "fang2hou/blink-copilot",
-    opts = {
-      max_completions = 3,
-      max_attempts = 5,
-    },
+    opts = {},
   },
   opts = {
     sources = {
