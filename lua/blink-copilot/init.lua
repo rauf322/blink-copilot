@@ -7,8 +7,7 @@ local M = {}
 function M.new()
 	local src = source:new()
 
-	vim.api.nvim_create_autocmd({ "FileType", "BufUnload" }, {
-		pattern = "*",
+	vim.api.nvim_create_autocmd({ "LspAttach" }, {
 		callback = function()
 			src:detect_lsp_client()
 		end,
