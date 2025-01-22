@@ -42,7 +42,8 @@
 2. Automatically detects LSP client on buffer switching, ensuring seamless
    functionality even if the Copilot LSP client isn't attached on the first
    file opening.
-3. Supports multiple completion candidates and automatically retries if a request fails.
+3. Supports multiple completion candidates and automatically retries if a
+   request fails.
 4. Utilizes the latest GitHub Copilot LSP API, resulting in less preprocessing
    and better performance compared to similar plugins.
 5. Offers superior performance over copilot.lua with rewritten native LSP
@@ -145,8 +146,8 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
     vim.g.copilot_no_maps = true
   end,
   config = function()
+    -- Block the normal Copilot suggestions
     vim.api.nvim_create_augroup("github_copilot", { clear = true })
-    -- Only register the autocmds needed
     for _, event in pairs({ "FileType", "BufUnload", "BufEnter" }) do
       vim.api.nvim_create_autocmd({ event }, {
         group = "github_copilot",
@@ -236,8 +237,8 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
     vim.g.copilot_no_maps = true
   end,
   config = function()
+    -- Block the normal Copilot suggestions
     vim.api.nvim_create_augroup("github_copilot", { clear = true })
-    -- Only register the autocmds needed
     for _, event in pairs({ "FileType", "BufUnload", "BufEnter" }) do
       vim.api.nvim_create_autocmd({ event }, {
         group = "github_copilot",
