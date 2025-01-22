@@ -38,13 +38,17 @@
 
 ## 🌟 Key Features
 
-1. Fully async `blink.cmp` integration.
-2. Smarter LSP client detecting on buffer switching.
-3. Customizable completion candidates for maximum flexibility.
-4. Latest LSP API with minimal processing for faster results.
-5. Rewritten native LSP interaction for high-speed, low-resource performance.
-6. Enhanced preview with smart indentation and snippet optimization.
-7. Support both `copilot.lua` and official `copilot.vim` as backend (LSP Provider).
+1. Developed according to the `blink.cmp` async specification.
+2. Automatically detects LSP client on buffer switching, ensuring seamless
+   functionality even if the Copilot LSP client isn't attached on the first
+   file opening.
+3. Supports multiple completion candidates and automatically retries if a request fails.
+4. Utilizes the latest GitHub Copilot LSP API, resulting in less preprocessing
+   and better performance compared to similar plugins.
+5. Offers superior performance over copilot.lua with rewritten native LSP
+   interaction, even when using the official Vim plugin.
+6. Features enhanced preview with smart deindentation formatting.
+7. Supports both `copilot.lua` and the official `copilot.vim` as backend LSP providers.
 
 ## ⚙️ Configuration
 
