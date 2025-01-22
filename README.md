@@ -120,8 +120,6 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
         copilot = {
           name = "copilot",
           module = "blink-copilot",
-          -- You need a icon source to show it, check https://cmp.saghen.dev/recipes#mini-icons
-          kind = "Copilot",
           score_offset = 100,
           async = true,
         },
@@ -171,8 +169,6 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
         copilot = {
           name = "copilot",
           module = "blink-copilot",
-          -- You need a icon source to show it, check https://cmp.saghen.dev/recipes#mini-icons
-          kind = "Copilot",
           score_offset = 100,
           async = true,
         },
@@ -203,14 +199,9 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
   },
   opts = {
     sources = {
-      default = { "copilot" },
       providers = {
         copilot = {
-          name = "copilot",
           module = "blink-copilot",
-          kind = "Copilot",
-          score_offset = 100,
-          async = true,
         },
       },
     },
