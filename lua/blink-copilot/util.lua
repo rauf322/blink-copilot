@@ -128,8 +128,9 @@ end
 
 ---Transforms a Copilot completion items to blink completion item
 ---@param completions table[]
+---@param kind_idx integer
 ---@return blink.cmp.CompletionItem[]
-function M.lsp_completion_items_to_blink_items(completions)
+function M.lsp_completion_items_to_blink_items(completions, kind_idx)
 	---@type blink.cmp.CompletionItem[]
 	local items = {}
 
@@ -141,7 +142,7 @@ function M.lsp_completion_items_to_blink_items(completions)
 
 		table.insert(items, {
 			label = dedented_text,
-			kind = vim.lsp.protocol.CompletionItemKind.Text,
+			kind = kind_idx,
 			textEdit = { newText = completion.insertText, range = completion.range },
 			documentation = {
 				kind = "markdown",

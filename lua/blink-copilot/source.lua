@@ -19,8 +19,20 @@ end
 function M:new(opts)
 	self:detect_lsp_client()
 	self:reset()
+
+	local source_config = vim.tbl_deep_extend("force", config.options, opts)
+
+	-- Register the new kind if it doesn't exist
+	local CompletionItemKind = require("blink.cmp.types").CompletionItemKind
+	if not CompletionItemKind[source_config.kind] then
+		local kind_idx = #CompletionItemKind + 1
+		CompletionItemKind[kind_idx] = source_config.kind
+		CompletionItemKind[source_config.kind] = kind_idx
+	end
+
 	return setmetatable({
-		config = vim.tbl_deep_extend("force", config.options, opts),
+		config = source_config,
+		kind_idx = CompletionItemKind[source_config.kind],
 	}, { __index = self })
 end
 
@@ -119,7 +131,7 @@ function M:get_completions(_, resolve)
 
 		local function process_and_resolve_items()
 			local lsp_items = coroutine.yield()
-			local blink_items = util.lsp_completion_items_to_blink_items(lsp_items)
+			local blink_items = util.lsp_completion_items_to_blink_items(lsp_items, self.kind_idx)
 			local added_items = self:add_new_completions(blink_items)
 
 			resolve({

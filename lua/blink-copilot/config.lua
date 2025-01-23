@@ -4,6 +4,7 @@ local M = {}
 M.options = {
 	max_completions = 3,
 	max_attempts = 4,
+	kind = "Copilot",
 }
 
 ---Merge the user options with the default options
