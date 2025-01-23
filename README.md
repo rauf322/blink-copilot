@@ -36,7 +36,7 @@
   - [copilot.vim][copilot-vim-github] - Official GitHub Copilot Vim/Neovim Plugin
   - [copilot.lua][copilot-lua-github] - Third-party GitHub Copilot written in Lua
 
-## 🌟 Key Features
+## 🌟 Features
 
 1. Developed according to the `blink.cmp` async specification.
 2. Automatically detects LSP client on buffer switching, ensuring seamless
@@ -50,6 +50,7 @@
    interaction, even when using the official Vim plugin.
 6. Features enhanced preview with smart deindentation formatting.
 7. Supports both `copilot.lua` and the official `copilot.vim` as backend LSP providers.
+8. Easily register and customize the completion kind and icon.
 
 ## ⚙️ Configuration
 
@@ -70,6 +71,7 @@ within `sources.provider.copilot.opts` is sufficient.
     opts = {
       max_completions = 1,  -- Global default for max completions
       max_attempts = 2,     -- Global default for max attempts
+      -- `kind` is not set, so the default value is "Copilot"
     }
   },
   opts = {
@@ -83,7 +85,7 @@ within `sources.provider.copilot.opts` is sufficient.
           async = true,
           opts = {
             -- Local options override global ones
-            -- Final settings: max_completions = 3, max_attempts = 2
+            -- Final settings: max_completions = 3, max_attempts = 2, kind = "Copilot"
             max_completions = 3,  -- Override global max_completions
           }
         },
@@ -103,6 +105,7 @@ Here is the default configuration for `blink-copilot`:
 {
   max_completions = 3,
   max_attempts = 4,
+  kind = "Copilot",
 }
 ```
 
@@ -125,6 +128,20 @@ Maximum number of attempts to fetch completions.
 > it is generally recommended to set it to `max_completions+1`.
 
 Default: `4`
+
+### `kind`
+
+Specifies the type of completion item to display.
+
+> [!NOTE]
+>
+> If the provided `kind` does not exist, `blink-copilot` will automatically
+> register it in `CompletionItemKind`.  
+> To display a custom icon for the `kind`, you need to define the `kind_icon`
+> in the `blink.cmp` options.  
+> Refer to the recipes for examples.
+
+Default: `"Copilot"`
 
 ## 🥘 Recipes
 
@@ -168,6 +185,11 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
             max_attempts = 4,
           }
         },
+      },
+    },
+    appearance = {
+      kind_icons = {
+        Copilot = "",
       },
     },
   },
@@ -218,6 +240,11 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
             max_attempts = 4,
           }
         },
+      },
+    },
+    appearance = {
+      kind_icons = {
+        Copilot = "",
       },
     },
   },
@@ -291,10 +318,6 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
 
 </details>
 
-### Others
-
-- [Add Copilot kind icon to completion items][kind-icon-doc]
-
 ## 📚 Frequently Asked Questions
 
 > The number of completions does not match my settings.
@@ -346,4 +369,3 @@ MIT
 [cmp-copilot-github]: https://github.com/hrsh7th/cmp-copilot
 [copilot-cmp-github]: https://github.com/zbirenbaum/copilot-cmp
 [blink-cmp-copilot-github]: https://github.com/giuxtaposition/blink-cmp-copilot
-[kind-icon-doc]: https://github.com/giuxtaposition/blink-cmp-copilot?tab=readme-ov-file#copilot-kind-icon
