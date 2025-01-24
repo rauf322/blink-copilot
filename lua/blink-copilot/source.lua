@@ -36,20 +36,6 @@ function M:new(opts)
 	}, { __index = self })
 end
 
----Get the current editor state
-local function get_current_editor_state()
-	local current_bufnr = vim.api.nvim_get_current_buf()
-	local version = vim.api.nvim_buf_get_var(0, "changedtick")
-	local cursor_pos = vim.api.nvim_win_get_cursor(0)
-
-	return {
-		bufnr = current_bufnr,
-		version = version,
-		line = cursor_pos[0],
-		col = cursor_pos[1],
-	}
-end
-
 ---Reset the context
 function M:reset()
 	util.cancel_request(self.client, self.context and self.context.first_req_id)
@@ -84,14 +70,20 @@ function M:add_new_completions(items)
 end
 
 ---Implement the get_completions method of the completion provider
----@param _ blink.cmp.Context
+---@param ctx blink.cmp.Context
 ---@param resolve fun(self: blink.cmp.CompletionResponse): nil
-function M:get_completions(_, resolve)
+function M:get_completions(ctx, resolve)
 	if not self.client then
 		return
 	end
 
-	local current_state = get_current_editor_state()
+	local current_state = {
+		bufnr = ctx.bufnr,
+		id = ctx.id,
+		line = ctx.cursor[0],
+		col = ctx.cursor[1],
+	}
+
 	if vim.deep_equal(current_state, self.context.target) then
 		resolve({
 			is_incomplete_forward = false,
