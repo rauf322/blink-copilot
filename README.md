@@ -16,7 +16,7 @@
 <summary><code>Table of Contents</code></summary>
 
 - [📋 Requirements](#-requirements)
-- [🌟 Key Features](#-key-features)
+- [🌟 Features](#-features)
 - [⚙️ Configuration](#️-configuration)
   - [`max_completions`](#max_completions)
   - [`max_attempts`](#max_attempts)
