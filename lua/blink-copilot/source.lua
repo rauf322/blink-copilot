@@ -3,17 +3,6 @@ local config = require("blink-copilot.config")
 
 local M = {}
 
----Detect the LSP client
-function M:detect_lsp_client()
-	if self.client and not self.client.is_stopped() then
-		return
-	end
-
-	local copilot_lua_clients = vim.lsp.get_clients({ name = "copilot" })
-	local copilot_vim_clients = vim.lsp.get_clients({ name = "GitHub Copilot" })
-	self.client = copilot_lua_clients and copilot_lua_clients[1] or copilot_vim_clients and copilot_vim_clients[1]
-end
-
 ---The constructor for the completion provider
 ---@param opts Config
 function M:new(opts)
@@ -34,6 +23,17 @@ function M:new(opts)
 		config = source_config,
 		kind_idx = CompletionItemKind[source_config.kind],
 	}, { __index = self })
+end
+
+---Detect the LSP client
+function M:detect_lsp_client()
+	if self.client and not self.client.is_stopped() then
+		return
+	end
+
+	local copilot_lua_clients = vim.lsp.get_clients({ name = "copilot" })
+	local copilot_vim_clients = vim.lsp.get_clients({ name = "GitHub Copilot" })
+	self.client = copilot_lua_clients and copilot_lua_clients[1] or copilot_vim_clients and copilot_vim_clients[1]
 end
 
 ---Reset the context
