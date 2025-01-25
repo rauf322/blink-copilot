@@ -20,6 +20,7 @@
 - [⚙️ Configuration](#️-configuration)
   - [`max_completions`](#max_completions)
   - [`max_attempts`](#max_attempts)
+  - [`kind`](#kind)
 - [🥘 Recipes](#-recipes)
   - [Not Using LazyVim?](#not-using-lazyvim)
   - [With LazyVim copilot extra](#with-lazyvim-copilot-extra)
