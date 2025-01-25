@@ -19,7 +19,7 @@
 - [🌟 Features](#-features)
 - [⚙️ Configuration](#️-configuration)
   - [`max_completions`](#max_completions)
-  - [`kind`](#kind)
+  - [`max_attempts`](#max_attempts)
 - [🥘 Recipes](#-recipes)
   - [Not Using LazyVim?](#not-using-lazyvim)
   - [With LazyVim copilot extra](#with-lazyvim-copilot-extra)
@@ -70,6 +70,7 @@ within `sources.provider.copilot.opts` is sufficient.
     "fang2hou/blink-copilot",
     opts = {
       max_completions = 1,  -- Global default for max completions
+      max_attempts = 2,     -- Global default for max attempts
       -- `kind` is not set, so the default value is "Copilot"
     }
   },
@@ -84,7 +85,7 @@ within `sources.provider.copilot.opts` is sufficient.
           async = true,
           opts = {
             -- Local options override global ones
-            -- Final settings: max_completions = 3, kind = "Copilot"
+            -- Final settings: max_completions = 3, max_attempts = 2, kind = "Copilot"
             max_completions = 3,  -- Override global max_completions
           }
         },
@@ -103,6 +104,7 @@ Here is the default configuration for `blink-copilot`:
 ```lua
 {
   max_completions = 3,
+  max_attempts = 4,
   kind = "Copilot",
 }
 ```
@@ -116,6 +118,16 @@ Maximum number of completions to show.
 > to a large number. This is a limitation of Copilot itself, not the plugin.
 
 Default: `3`
+
+### `max_attempts`
+
+Maximum number of attempts to fetch completions.
+
+> [!NOTE]
+> Each attempt will fetch 0 ~ 10 completions. Considering the possibility of failure,
+> it is generally recommended to set it to `max_completions+1`.
+
+Default: `4`
 
 ### `kind`
 
@@ -170,6 +182,7 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
           async = true,
           opts = {
             max_completions = 3,
+            max_attempts = 4,
           }
         },
       },
@@ -224,6 +237,7 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
           async = true,
           opts = {
             max_completions = 3,
+            max_attempts = 4,
           }
         },
       },
@@ -260,6 +274,7 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
           module = "blink-copilot",
           opts = {
             max_completions = 3,
+            max_attempts = 4,
           }
         },
       },
