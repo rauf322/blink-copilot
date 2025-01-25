@@ -13,9 +13,6 @@ M.options = {
 ---@param user_opts Config
 function M.init(user_opts)
 	M.options = vim.tbl_deep_extend("force", M.options, user_opts)
-	if not M.options.max_attempts then
-		M.options.max_attempts = M.options.max_completions + 1
-	end
 end
 
 return M

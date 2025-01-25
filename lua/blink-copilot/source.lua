@@ -10,6 +10,7 @@ function M:new(opts)
 	self:reset()
 
 	local source_config = vim.tbl_deep_extend("force", config.options, opts)
+	source_config.max_attempts = source_config.max_attempts or source_config.max_completions + 1
 
 	-- Register the new kind if it doesn't exist
 	local CompletionItemKind = require("blink.cmp.types").CompletionItemKind
