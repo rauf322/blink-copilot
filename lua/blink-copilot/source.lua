@@ -7,7 +7,7 @@ local M = {}
 ---@param opts Config
 function M:new(opts)
 	self:detect_lsp_client()
-	self:reset()
+	self:reset(0)
 
 	local source_config = vim.tbl_deep_extend("force", config.options, opts)
 	source_config.max_attempts = source_config.max_attempts or source_config.max_completions + 1
@@ -38,7 +38,8 @@ function M:detect_lsp_client()
 end
 
 ---Reset the context
-function M:reset()
+---@param ts integer
+function M:reset(ts)
 	util.cancel_request(self.client, self.context and self.context.first_req_id)
 	util.cancel_request(self.client, self.context and self.context.cycling_req_id)
 
@@ -46,9 +47,10 @@ function M:reset()
 	self.context = {
 		cache = {},
 		completions = {},
-		target = nil,
+		state = nil,
 		first_req_id = nil,
 		cycling_req_id = nil,
+		start_ts = ts,
 	}
 end
 
@@ -78,23 +80,33 @@ function M:get_completions(ctx, resolve)
 		return
 	end
 
-	local current_state = {
-		bufnr = ctx.bufnr,
-		id = ctx.id,
-		line = ctx.cursor[0],
-		col = ctx.cursor[1],
-	}
-
-	if vim.deep_equal(current_state, self.context.target) then
+	local current_state = { bufnr = ctx.bufnr, id = ctx.id, cursor = ctx.cursor }
+	if vim.deep_equal(current_state, self.context.state) then
 		resolve({
-			is_incomplete_forward = false,
-			is_incomplete_backward = false,
+			is_incomplete_forward = self.config.auto_refresh.forward,
+			is_incomplete_backward = self.config.auto_refresh.backward,
 			items = self.context.completions,
 		})
 		return
 	end
 
-	self:reset()
+	local now = util.timestamp()
+
+	if self.config.auto_refresh.debounce ~= false and type(self.config.auto_refresh.debounce) == "number" then
+		local since = now - self.context.start_ts
+		if since < self.config.auto_refresh.debounce then
+			if self.debounce_timer then
+				self.debounce_timer:stop()
+			end
+			self.debounce_timer = vim.defer_fn(function()
+				self.debounce_timer = nil
+				self:get_completions(ctx, resolve)
+			end, self.config.auto_refresh.debounce)
+			return
+		end
+	end
+
+	self:reset(now)
 
 	coroutine.wrap(function()
 		local co = coroutine.running()
@@ -102,9 +114,7 @@ function M:get_completions(ctx, resolve)
 
 		---@type lsp.Handler
 		local function handle_lsp_response(err, response)
-			if not err and response and response.items then
-				coroutine.resume(co, response.items)
-			end
+			coroutine.resume(co, not err and response and response.items)
 		end
 
 		---@param is_initial_request boolean
@@ -124,13 +134,16 @@ function M:get_completions(ctx, resolve)
 
 		local function process_and_resolve_items()
 			local lsp_items = coroutine.yield()
+			if self.context.start_ts ~= now or not lsp_items or #lsp_items == 0 then
+				return
+			end
+
 			local blink_items = util.lsp_completion_items_to_blink_items(lsp_items, self.kind_idx)
-			local added_items = self:add_new_completions(blink_items)
 
 			resolve({
-				is_incomplete_forward = false,
-				is_incomplete_backward = false,
-				items = added_items,
+				is_incomplete_forward = self.config.auto_refresh.forward,
+				is_incomplete_backward = self.config.auto_refresh.backward,
+				items = self:add_new_completions(blink_items),
 			})
 		end
 
@@ -138,13 +151,17 @@ function M:get_completions(ctx, resolve)
 		if send_completion_request(true) then
 			process_and_resolve_items()
 			self.context.first_req_id = nil
-			self.context.target = current_state
+			self.context.state = current_state
 		end
 
 		-- Attempt to get more completions
 		lsp_params = util.to_cycling_lsp_params(lsp_params)
 		local attempts_made = 0
-		while #self.context.completions < self.config.max_completions and attempts_made < self.config.max_attempts do
+		while
+			now == self.context.start_ts -- If new blink request comes in, stop further attempts
+			and #self.context.completions < self.config.max_completions
+			and attempts_made < self.config.max_attempts
+		do
 			attempts_made = attempts_made + 1
 			if send_completion_request(false) then
 				process_and_resolve_items()

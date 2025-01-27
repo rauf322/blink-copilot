@@ -154,4 +154,11 @@ function M.lsp_completion_items_to_blink_items(completions, kind_idx)
 	return items
 end
 
+---Get the current time in milliseconds
+---@return integer timestamp
+function M.timestamp()
+	---@diagnostic disable-next-line: undefined-field
+	return math.floor(vim.loop.hrtime() / 1e6)
+end
+
 return M

@@ -7,6 +7,11 @@ local M = {}
 M.options = {
 	max_completions = 3,
 	kind = "Copilot",
+	debounce = 750, ---@type integer | false
+	auto_refresh = {
+		backward = true,
+		forward = true,
+	},
 }
 
 ---Merge the user options with the default options
