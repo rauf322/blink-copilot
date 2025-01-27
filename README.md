@@ -45,13 +45,15 @@
    file opening.
 3. Supports multiple completion candidates and automatically retries if a
    request fails.
-4. Utilizes the latest GitHub Copilot LSP API, resulting in less preprocessing
+4. Automatically refreshes the completion list when the cursor moves.
+5. Add debounce to avoid excessive requests to Copilot.
+6. Utilizes the latest GitHub Copilot LSP API, resulting in less preprocessing
    and better performance compared to similar plugins.
-5. Offers superior performance over copilot.lua with rewritten native LSP
+7. Offers superior performance over copilot.lua with rewritten native LSP
    interaction, even when using the official Vim plugin.
-6. Features enhanced preview with smart deindentation formatting.
-7. Supports both `copilot.lua` and the official `copilot.vim` as backend LSP providers.
-8. Easily register and customize the completion kind and icon.
+8. Features enhanced preview with smart deindentation formatting.
+9. Supports both `copilot.lua` and the official `copilot.vim` as backend LSP providers.
+10. Easily register and customize the completion kind and icon.
 
 ## ⚙️ Configuration
 
@@ -107,6 +109,11 @@ Here is the default configuration for `blink-copilot`:
   max_completions = 3,
   max_attempts = 4,
   kind = "Copilot",
+  debounce = 750, ---@type integer | false
+  auto_refresh = {
+    backward = true,
+    forward = true,
+  },
 }
 ```
 
@@ -143,6 +150,33 @@ Specifies the type of completion item to display.
 > Refer to the recipes for examples.
 
 Default: `"Copilot"`
+
+### `debounce`
+
+> [!NOTE]
+> Debounce is a feature that limits the number of requests sent to Copilot.  
+> You can customize the debounce time in milliseconds or set it to `false` to
+> disable it.
+
+<!-- markdownlint-disable no-blank-blockquote -->
+
+> [!IMPORTANT]
+> If you disable debounce and enable `auto_refresh`, the completion list will
+> refresh every time the cursor moves.  
+> Excessive refreshing may temporarily block your Copilot.
+
+Default: `750`
+
+### `auto_refresh`
+
+Automatically refreshes the completion list when the cursor moves.
+
+> [!NOTE]
+> If you enable `backward`, the completion list will be refreshed when the cursor
+> moves backward. If you enable `forward`, the completion list will be refreshed
+> when the cursor moves forward.
+
+Default: `{ backward = true, forward = true }`
 
 ## 🥘 Recipes
 
