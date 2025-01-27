@@ -45,7 +45,7 @@
    file opening.
 3. Supports multiple completion candidates and automatically retries if a
    request fails.
-4. Automatically refreshes the completion list when the cursor moves.
+4. Automatically refreshes Copilot suggestion items when the cursor moves.
 5. Add debounce to avoid excessive requests to Copilot.
 6. Utilizes the latest GitHub Copilot LSP API, resulting in less preprocessing
    and better performance compared to similar plugins.
@@ -161,8 +161,8 @@ Default: `"Copilot"`
 <!-- markdownlint-disable no-blank-blockquote -->
 
 > [!IMPORTANT]
-> If you disable debounce and enable `auto_refresh`, the completion list will
-> refresh every time the cursor moves.  
+> If you disable debounce and enable `auto_refresh`, the copilot suggestion
+> items will be refreshed every time the cursor moves.  
 > Excessive refreshing may temporarily block your Copilot.
 
 Default: `750`
@@ -368,7 +368,7 @@ completions may be less than this value.
 - Support multiple completions, and it is configurable.
 - LSP interaction no longer relies on `copilot.lua`, ensuring improved
   performance and compliance with the latest official LSP API specifications.
-- Auto refresh completion list when cursor moves.
+- Auto refresh copilot suggestion items when cursor moves.
 
 > The completion isn't working after restarting Copilot. What should I do?
 
