@@ -368,6 +368,7 @@ completions may be less than this value.
 - Support multiple completions, and it is configurable.
 - LSP interaction no longer relies on `copilot.lua`, ensuring improved
   performance and compliance with the latest official LSP API specifications.
+- Auto refresh completion list when cursor moves.
 
 > The completion isn't working after restarting Copilot. What should I do?
 
