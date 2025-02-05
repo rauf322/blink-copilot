@@ -396,7 +396,7 @@ MIT
 
 <!-- LINKS -->
 
-[title-image]: https://github.com/user-attachments/assets/94ba611a-12d9-4aba-bb97-ad8a433a47ad
+[title-image]: https://github.com/user-attachments/assets/dbe4dee4-811f-4f46-be89-4d58dfea9433
 [copilot-vim-github]: https://github.com/github/copilot.vim
 [copilot-lua-github]: https://github.com/zbirenbaum/copilot.lua
 [lazyvim-copilot-extra]: https://www.lazyvim.org/extras/ai/copilot
