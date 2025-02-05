@@ -144,10 +144,7 @@ function M.lsp_completion_items_to_blink_items(completions, kind_idx)
 			label = dedented_text,
 			kind = kind_idx,
 			textEdit = { newText = completion.insertText, range = completion.range },
-			documentation = {
-				kind = "markdown",
-				value = string.format("```%s\n%s\n```\n", vim.bo.filetype, dedented_text),
-			},
+			detail = dedented_text,
 		})
 	end
 
