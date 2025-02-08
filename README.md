@@ -21,6 +21,8 @@
   - [`max_completions`](#max_completions)
   - [`max_attempts`](#max_attempts)
   - [`kind`](#kind)
+  - [`debounce`](#debounce)
+  - [`auto_refresh`](#auto_refresh)
 - [🥘 Recipes](#-recipes)
   - [Not Using LazyVim?](#not-using-lazyvim)
   - [With LazyVim copilot extra](#with-lazyvim-copilot-extra)
@@ -57,9 +59,9 @@
 
 ## ⚙️ Configuration
 
-`blink-copilot` seamlessly integrates with both `blink.cmp` source options and
-Neovim plugin configurations. For most users, simply configuring the options
-within `sources.provider.copilot.opts` is sufficient.
+`blink-copilot` seamlessly integrates with **both** <u>`blink.cmp` source options</u>
+and <u>Neovim plugin configurations</u>. For most users, simply configuring
+the options within blink options `sources.provider.copilot.opts` is sufficient.
 
 <details>
 
@@ -215,10 +217,6 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
           module = "blink-copilot",
           score_offset = 100,
           async = true,
-          opts = {
-            max_completions = 3,
-            max_attempts = 4,
-          }
         },
       },
     },
@@ -270,10 +268,6 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
           module = "blink-copilot",
           score_offset = 100,
           async = true,
-          opts = {
-            max_completions = 3,
-            max_attempts = 4,
-          }
         },
       },
     },
@@ -307,10 +301,6 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
       providers = {
         copilot = {
           module = "blink-copilot",
-          opts = {
-            max_completions = 3,
-            max_attempts = 4,
-          }
         },
       },
     },
