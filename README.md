@@ -193,7 +193,6 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
 {
   "zbirenbaum/copilot.lua",
   cmd = "Copilot",
-  build = ":Copilot auth",
   event = "InsertEnter",
   opts = {
     suggestion = { enabled = false },
@@ -238,7 +237,6 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
 {
   "github/copilot.vim",
   cmd = "Copilot",
-  build = ":Copilot auth",
   event = "BufWinEnter",
   init = function()
     vim.g.copilot_no_maps = true
@@ -321,7 +319,6 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
 {
   "github/copilot.vim",
   cmd = "Copilot",
-  build = ":Copilot auth",
   event = "BufWinEnter",
   init = function()
     vim.g.copilot_no_maps = true
