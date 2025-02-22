@@ -155,7 +155,7 @@ Default: `"Copilot"`
 
 Specifies the icon of completion item to display.
 
-Default: `" "`
+Default: `" "` (![image](https://github.com/user-attachments/assets/06330b50-2386-4fc1-8dbd-8040ec4cb2df))
 
 ### `debounce`
 
