@@ -171,7 +171,7 @@ Default: `""`
 > items will be refreshed every time the cursor moves.  
 > Excessive refreshing may temporarily block your Copilot.
 
-Default: `750`
+Default: `200`
 
 ### `auto_refresh`
 
