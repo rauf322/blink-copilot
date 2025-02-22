@@ -92,16 +92,16 @@ function M:get_completions(ctx, resolve)
 
 	local now = util.timestamp()
 
-	if self.config.auto_refresh.debounce ~= false and type(self.config.auto_refresh.debounce) == "number" then
+	if self.config.debounce ~= false and type(self.config.debounce) == "number" then
 		local since = now - self.context.start_ts
-		if since < self.config.auto_refresh.debounce then
+		if since < self.config.debounce then
 			if self.debounce_timer then
 				self.debounce_timer:stop()
 			end
 			self.debounce_timer = vim.defer_fn(function()
 				self.debounce_timer = nil
 				self:get_completions(ctx, resolve)
-			end, self.config.auto_refresh.debounce)
+			end, self.config.debounce)
 			return
 		end
 	end
