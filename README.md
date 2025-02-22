@@ -20,7 +20,8 @@
 - [⚙️ Configuration](#️-configuration)
   - [`max_completions`](#max_completions)
   - [`max_attempts`](#max_attempts)
-  - [`kind`](#kind)
+  - [`kind_name`](#kind_name)
+  - [`kind_icon`](#kind_icon)
   - [`debounce`](#debounce)
   - [`auto_refresh`](#auto_refresh)
 - [🥘 Recipes](#-recipes)
@@ -76,7 +77,7 @@ the options within blink options `sources.provider.copilot.opts` is sufficient.
     opts = {
       max_completions = 1,  -- Global default for max completions
       max_attempts = 2,     -- Global default for max attempts
-      -- `kind` is not set, so the default value is "Copilot"
+      -- `kind_name` is not set, so the default value is "Copilot"
     }
   },
   opts = {
@@ -90,8 +91,12 @@ the options within blink options `sources.provider.copilot.opts` is sufficient.
           async = true,
           opts = {
             -- Local options override global ones
-            -- Final settings: max_completions = 3, max_attempts = 2, kind = "Copilot"
             max_completions = 3,  -- Override global max_completions
+
+            -- Final settings:
+            -- * max_completions = 3
+            -- * max_attempts = 2
+            -- * kind_name, kind_icon, debounce, auto_refresh are default
           }
         },
       },
@@ -110,7 +115,8 @@ Here is the default configuration for `blink-copilot`:
 {
   max_completions = 3,
   max_attempts = 4,
-  kind = "Copilot",
+  kind_name = "Copilot",
+  kind_icon = "",
   debounce = 200, ---@type integer | false
   auto_refresh = {
     backward = true,
@@ -139,19 +145,17 @@ Maximum number of attempts to fetch completions.
 
 Default: `4`
 
-### `kind`
+### `kind_name`
 
 Specifies the type of completion item to display.
 
-> [!NOTE]
->
-> If the provided `kind` does not exist, `blink-copilot` will automatically
-> register it in `CompletionItemKind`.  
-> To display a custom icon for the `kind`, you need to define the `kind_icon`
-> in the `blink.cmp` options.  
-> Refer to the recipes for examples.
-
 Default: `"Copilot"`
+
+### `kind_icon`
+
+Specifies the icon of completion item to display.
+
+Default: `""`
 
 ### `debounce`
 
@@ -219,11 +223,6 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
         },
       },
     },
-    appearance = {
-      kind_icons = {
-        Copilot = "",
-      },
-    },
   },
 }
 ```
@@ -267,11 +266,6 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
           score_offset = 100,
           async = true,
         },
-      },
-    },
-    appearance = {
-      kind_icons = {
-        Copilot = "",
       },
     },
   },
