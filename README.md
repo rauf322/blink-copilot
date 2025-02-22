@@ -116,7 +116,7 @@ Here is the default configuration for `blink-copilot`:
   max_completions = 3,
   max_attempts = 4,
   kind_name = "Copilot",
-  kind_icon = "",
+  kind_icon = " ",
   debounce = 200, ---@type integer | false
   auto_refresh = {
     backward = true,
@@ -155,7 +155,7 @@ Default: `"Copilot"`
 
 Specifies the icon of completion item to display.
 
-Default: `""`
+Default: `" "`
 
 ### `debounce`
 
