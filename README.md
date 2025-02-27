@@ -17,6 +17,7 @@
 
 - [📋 Requirements](#-requirements)
 - [🌟 Features](#-features)
+- [🥘 Recipes](#-recipes)
 - [⚙️ Configuration](#️-configuration)
   - [`max_completions`](#max_completions)
   - [`max_attempts`](#max_attempts)
@@ -25,7 +26,6 @@
   - [`kind_hl`](#kind_hl)
   - [`debounce`](#debounce)
   - [`auto_refresh`](#auto_refresh)
-- [🥘 Recipes](#-recipes)
 - [📚 Frequently Asked Questions](#-frequently-asked-questions)
 - [🔄 Alternatives and Related Projects](#-alternatives-and-related-projects)
 - [🪪 License](#-license)
