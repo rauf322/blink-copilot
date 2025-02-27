@@ -22,11 +22,10 @@
   - [`max_attempts`](#max_attempts)
   - [`kind_name`](#kind_name)
   - [`kind_icon`](#kind_icon)
+  - [`kind_hl`](#kind_hl)
   - [`debounce`](#debounce)
   - [`auto_refresh`](#auto_refresh)
 - [🥘 Recipes](#-recipes)
-  - [Not Using LazyVim?](#not-using-lazyvim)
-  - [With LazyVim copilot extra](#with-lazyvim-copilot-extra)
 - [📚 Frequently Asked Questions](#-frequently-asked-questions)
 - [🔄 Alternatives and Related Projects](#-alternatives-and-related-projects)
 - [🪪 License](#-license)
@@ -42,153 +41,18 @@
 
 ## 🌟 Features
 
-1. Developed according to the `blink.cmp` async specification.
-2. Automatically detects LSP client on buffer switching, ensuring seamless
-   functionality even if the Copilot LSP client isn't attached on the first
-   file opening.
-3. Supports multiple completion candidates and automatically retries if a
-   request fails.
-4. Automatically refreshes Copilot suggestion items when the cursor moves.
-5. Add debounce to avoid excessive requests to Copilot.
-6. Utilizes the latest GitHub Copilot LSP API, resulting in less preprocessing
-   and better performance compared to similar plugins.
-7. Offers superior performance over copilot.lua with rewritten native LSP
-   interaction, even when using the official Vim plugin.
-8. Features enhanced preview with smart deindentation formatting.
-9. Supports both `copilot.lua` and the official `copilot.vim` as backend LSP providers.
-10. Easily register and customize the completion kind and icon.
-
-## ⚙️ Configuration
-
-`blink-copilot` seamlessly integrates with **both** <u>`blink.cmp` source options</u>
-and <u>Neovim plugin configurations</u>. For most users, simply configuring
-the options within blink options `sources.provider.copilot.opts` is sufficient.
-
-<details>
-
-<summary><i>Explore the configuration in detail</i></summary>
-
-```lua
-{
-  "saghen/blink.cmp",
-  optional = true,
-  dependencies = {
-    "fang2hou/blink-copilot",
-    opts = {
-      max_completions = 1,  -- Global default for max completions
-      max_attempts = 2,     -- Global default for max attempts
-      -- `kind_name` is not set, so the default value is "Copilot"
-    }
-  },
-  opts = {
-    sources = {
-      default = { "copilot" },
-      providers = {
-        copilot = {
-          name = "copilot",
-          module = "blink-copilot",
-          score_offset = 100,
-          async = true,
-          opts = {
-            -- Local options override global ones
-            max_completions = 3,  -- Override global max_completions
-
-            -- Final settings:
-            -- * max_completions = 3
-            -- * max_attempts = 2
-            -- * kind_name, kind_icon, debounce, auto_refresh are default
-          }
-        },
-      },
-    },
-  },
-}
-```
-
-</details>
-
----
-
-Here is the default configuration for `blink-copilot`:
-
-```lua
-{
-  max_completions = 3,
-  max_attempts = 4,
-  kind_name = "Copilot",
-  kind_icon = " ",
-  debounce = 200, ---@type integer | false
-  auto_refresh = {
-    backward = true,
-    forward = true,
-  },
-}
-```
-
-### `max_completions`
-
-Maximum number of completions to show.
-
-> [!NOTE]
-> Sometimes Copilot do not provide any completions, even you set `max_completions`
-> to a large number. This is a limitation of Copilot itself, not the plugin.
-
-Default: `3`
-
-### `max_attempts`
-
-Maximum number of attempts to fetch completions.
-
-> [!NOTE]
-> Each attempt will fetch 0 ~ 10 completions. Considering the possibility of failure,
-> it is generally recommended to set it to `max_completions+1`.
-
-Default: `4`
-
-### `kind_name`
-
-Specifies the type of completion item to display.
-
-Default: `"Copilot"`
-
-### `kind_icon`
-
-Specifies the icon of completion item to display.
-
-Default: `" "` (![image](https://github.com/user-attachments/assets/06330b50-2386-4fc1-8dbd-8040ec4cb2df))
-
-### `debounce`
-
-> [!NOTE]
-> Debounce is a feature that limits the number of requests sent to Copilot.  
-> You can customize the debounce time in milliseconds or set it to `false` to
-> disable it.
-
-<!-- markdownlint-disable no-blank-blockquote -->
-
-> [!IMPORTANT]
-> If you disable debounce and enable `auto_refresh`, the copilot suggestion
-> items will be refreshed every time the cursor moves.  
-> Excessive refreshing may temporarily block your Copilot.
-
-Default: `200`
-
-### `auto_refresh`
-
-Automatically refreshes the completion list when the cursor moves.
-
-> [!NOTE]
-> If you enable `backward`, the completion list will be refreshed when the cursor
-> moves backward. If you enable `forward`, the completion list will be refreshed
-> when the cursor moves forward.
-
-Default: `{ backward = true, forward = true }`
+1. Compliant with the blink.cmp async specification.
+2. Automatically detects the LSP client during buffer switches.
+3. Supports multiple completion candidates.
+4. Refreshes Copilot suggestion items dynamically as the cursor moves.
+5. Implemented entirely in Lua using the latest GitHub Copilot LSP APIs.
+6. Offers an improved preview with auto-indentation for completion items.
+7. Compatible with both copilot.lua and the official copilot.vim LSP providers.
+8. Easily configurable icon and kind settings.
 
 ## 🥘 Recipes
 
 Here are some example configuration for using `blink-copilot` with [lazy.nvim][lazy-nvim-github].
-
-### Not Using LazyVim?
 
 <details>
 <summary><code>blink-copilot</code> + <code>zbirenbaum/copilot.lua</code></summary>
@@ -274,13 +138,16 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
 
 </details>
 
-### With LazyVim [copilot][lazyvim-copilot-extra] extra
+### With 💤 LazyVim [copilot][lazyvim-copilot-extra] extra
 
 <details>
 <summary><code>blink-cmp-copilot</code> ➡️ <code>blink-copilot</code></summary>
 
 ```lua
+-- Import copilot extra (you can also use `:LazyExtras` to install it)
 { import = "lazyvim.plugins.extras.ai.copilot" },
+
+-- Source replacement
 {
   "giuxtaposition/blink-cmp-copilot",
   enabled = false,
@@ -334,6 +201,144 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
 
 </details>
 
+## ⚙️ Configuration
+
+`blink-copilot` seamlessly integrates with **both** <u>`blink.cmp` source options</u>
+and <u>Neovim plugin configurations</u>. For most users, simply configuring
+the options within blink options `sources.provider.copilot.opts` is sufficient.
+
+<details>
+
+<summary><i>Explore the configuration in detail</i></summary>
+
+```lua
+{
+  "saghen/blink.cmp",
+  optional = true,
+  dependencies = {
+    "fang2hou/blink-copilot",
+    opts = {
+      max_completions = 1,  -- Global default for max completions
+      max_attempts = 2,     -- Global default for max attempts
+    }
+  },
+  opts = {
+    sources = {
+      default = { "copilot" },
+      providers = {
+        copilot = {
+          name = "copilot",
+          module = "blink-copilot",
+          score_offset = 100,
+          async = true,
+          opts = {
+            -- Local options override global ones
+            max_completions = 3,  -- Override global max_completions
+
+            -- Final settings:
+            -- * max_completions = 3
+            -- * max_attempts = 2
+            -- * all other options are default
+          }
+        },
+      },
+    },
+  },
+}
+```
+
+</details>
+
+---
+
+Here is the default configuration for `blink-copilot`:
+
+```lua
+{
+  max_completions = 3,
+  max_attempts = 4,
+  kind_name = "Copilot", ---@type string | false
+  kind_icon = " ", ---@type string | false
+  kind_hl = false, ---@type string | false
+  debounce = 200, ---@type integer | false
+  auto_refresh = {
+    backward = true,
+    forward = true,
+  },
+}
+```
+
+### `max_completions`
+
+Maximum number of completions to show.
+
+> [!NOTE]
+> Sometimes Copilot do not provide any completions, even you set `max_completions`
+> to a large number. This is a limitation of Copilot itself, not the plugin.
+
+Default: `3`
+
+### `max_attempts`
+
+Maximum number of attempts to fetch completions.
+
+> [!NOTE]
+> Each attempt will fetch 0 ~ 10 completions. Considering the possibility of failure,
+> it is generally recommended to set it to `max_completions+1`.
+
+Default: `4`
+
+### `kind_name`
+
+Specifies the **type** of completion item to display. Some distros may automatically set icon from the `kind_name`.
+
+Set to `false` to disable the `kind_name` in completion items.
+
+Default: `"Copilot"`
+
+### `kind_icon`
+
+Specifies the **icon** of completion item to display.
+
+Set to `false` to disable the `kind_icon` in completion items.
+
+Default: `" "` (![default-icon][copilot-icon-image])
+
+### `kind_hl`
+
+Specifies the **highlight group** of completion item to display.
+
+Set to `false` to disable the `kind_hl` in completion items.
+
+Default: `false`
+
+### `debounce`
+
+> [!NOTE]
+> Debounce is a feature that limits the number of requests sent to Copilot.  
+> You can customize the debounce time in milliseconds or set it to `false` to
+> disable it.
+
+<!-- markdownlint-disable no-blank-blockquote -->
+
+> [!IMPORTANT]
+> If you disable debounce and enable `auto_refresh`, the copilot suggestion
+> items will be refreshed every time the cursor moves.  
+> Excessive refreshing may temporarily block your Copilot.
+
+Default: `200`
+
+### `auto_refresh`
+
+Automatically refreshes the completion list when the cursor moves.
+
+> [!NOTE]
+> If you enable `backward`, the completion list will be refreshed when the cursor
+> moves backward. If you enable `forward`, the completion list will be refreshed
+> when the cursor moves forward.
+
+Default: `{ backward = true, forward = true }`
+
 ## 📚 Frequently Asked Questions
 
 > The number of completions does not match my settings.
@@ -378,6 +383,7 @@ MIT
 <!-- LINKS -->
 
 [title-image]: https://github.com/user-attachments/assets/dbe4dee4-811f-4f46-be89-4d58dfea9433
+[copilot-icon-image]: https://github.com/user-attachments/assets/06330b50-2386-4fc1-8dbd-8040ec4cb2df
 [copilot-vim-github]: https://github.com/github/copilot.vim
 [copilot-lua-github]: https://github.com/zbirenbaum/copilot.lua
 [lazyvim-copilot-extra]: https://www.lazyvim.org/extras/ai/copilot
@@ -385,4 +391,4 @@ MIT
 [blink-cmp-github]: https://github.com/Saghen/blink.cmp
 [cmp-copilot-github]: https://github.com/hrsh7th/cmp-copilot
 [copilot-cmp-github]: https://github.com/zbirenbaum/copilot-cmp
-[blink-cmp-copilot-github]: https://github.com/giuxtaposition/blink-cmp-copilot
+[blink-cmp-copilot-github]: https://github.com/giuxtaposition/blink-cmp-copilothttps://github.com/user-attachments/assets/06330b50-2386-4fc1-8dbd-8040ec4cb2df
