@@ -14,6 +14,13 @@ function M:new(opts)
 	local source_config = vim.tbl_deep_extend("force", config.options, opts)
 	source_config.max_attempts = source_config.max_attempts or source_config.max_completions + 1
 
+	-- Unset the kind_name, kind_icon, and kind_hl if they are set to false
+	for _, k in pairs({ "kind_name", "kind_icon", "kind_hl" }) do
+		if source_config[k] == false then
+			source_config[k] = nil
+		end
+	end
+
 	return setmetatable({
 		config = source_config,
 	}, { __index = self })
@@ -131,8 +138,12 @@ function M:get_completions(ctx, resolve)
 				return
 			end
 
-			local blink_items =
-				util.lsp_completion_items_to_blink_items(lsp_items, self.config.kind_name, self.config.kind_icon)
+			local blink_items = util.lsp_completion_items_to_blink_items(
+				lsp_items,
+				self.config.kind_name,
+				self.config.kind_icon,
+				self.config.kind_hl
+			)
 
 			resolve({
 				is_incomplete_forward = self.config.auto_refresh.forward,

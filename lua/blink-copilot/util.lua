@@ -128,10 +128,11 @@ end
 
 ---Transforms a Copilot completion items to blink completion item
 ---@param completions table[]
----@param kind_name string
----@param kind_icon string
+---@param kind_name? string
+---@param kind_icon? string
+---@param kind_hl? string
 ---@return blink.cmp.CompletionItem[]
-function M.lsp_completion_items_to_blink_items(completions, kind_name, kind_icon)
+function M.lsp_completion_items_to_blink_items(completions, kind_name, kind_icon, kind_hl)
 	---@type blink.cmp.CompletionItem[]
 	local items = {}
 
@@ -145,6 +146,7 @@ function M.lsp_completion_items_to_blink_items(completions, kind_name, kind_icon
 			label = dedented_text,
 			kind_name = kind_name,
 			kind_icon = kind_icon,
+			kind_hl = kind_hl,
 			textEdit = { newText = completion.insertText, range = completion.range },
 			detail = dedented_text,
 		})
