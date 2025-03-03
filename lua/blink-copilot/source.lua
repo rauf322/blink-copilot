@@ -34,7 +34,20 @@ function M:detect_lsp_client()
 
 	local copilot_lua_clients = vim.lsp.get_clients({ name = "copilot" })
 	local copilot_vim_clients = vim.lsp.get_clients({ name = "GitHub Copilot" })
-	self.client = copilot_lua_clients and copilot_lua_clients[1] or copilot_vim_clients and copilot_vim_clients[1]
+
+	if copilot_lua_clients and copilot_lua_clients[1] then
+		self.client = copilot_lua_clients[1]
+		self.is_copilot_enabled = function()
+			local ok, clt = pcall(require, "copilot.client")
+			return ok and clt and not clt.is_disabled()
+		end
+		return
+	end
+
+	self.client = copilot_vim_clients and copilot_vim_clients[1]
+	self.is_copilot_enabled = function()
+		return vim.g.copilot_enabled == 1
+	end
 end
 
 ---Reset the context
@@ -76,7 +89,7 @@ end
 ---@param ctx blink.cmp.Context
 ---@param resolve fun(self: blink.cmp.CompletionResponse): nil
 function M:get_completions(ctx, resolve)
-	if not self.client then
+	if not self.client or not self.is_copilot_enabled() then
 		return
 	end
 
