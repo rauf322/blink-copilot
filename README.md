@@ -107,14 +107,12 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
   config = function()
     -- Block the normal Copilot suggestions
     vim.api.nvim_create_augroup("github_copilot", { clear = true })
-    for _, event in pairs({ "FileType", "BufUnload", "BufEnter" }) do
-      vim.api.nvim_create_autocmd({ event }, {
-        group = "github_copilot",
-        callback = function()
-          vim.fn["copilot#On" .. event]()
-        end,
-      })
-    end
+    vim.api.nvim_create_autocmd({ "FileType", "BufUnload", "BufEnter" }, {
+      group = "github_copilot",
+      callback = function(args)
+        vim.fn["copilot#On" .. args.event]()
+      end,
+    })
   end,
 },
 {
@@ -187,14 +185,12 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
   config = function()
     -- Block the normal Copilot suggestions
     vim.api.nvim_create_augroup("github_copilot", { clear = true })
-    for _, event in pairs({ "FileType", "BufUnload", "BufEnter" }) do
-      vim.api.nvim_create_autocmd({ event }, {
-        group = "github_copilot",
-        callback = function()
-          vim.fn["copilot#On" .. event]()
-        end,
-      })
-    end
+    vim.api.nvim_create_autocmd({ "FileType", "BufUnload", "BufEnter" }, {
+      group = "github_copilot",
+      callback = function(args)
+        vim.fn["copilot#On" .. args.event]()
+      end,
+    })
   end,
 }
 ```
@@ -290,7 +286,8 @@ Default: `4`
 
 ### `kind_name`
 
-Specifies the **type** of completion item to display. Some distros may automatically set icon from the `kind_name`.
+Specifies the **type** of completion item to display. Some distros may
+automatically set icon from the `kind_name`.
 
 Set to `false` to disable the `kind_name` in completion items.
 
