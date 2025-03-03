@@ -47,7 +47,7 @@ function M:detect_lsp_client()
 
 	self.client = copilot_vim_clients and copilot_vim_clients[1]
 	self.is_copilot_enabled = function()
-		return vim.g.copilot_enabled == 1
+		return vim.g.copilot_enabled ~= 0
 	end
 end
 
