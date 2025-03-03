@@ -37,10 +37,11 @@ function M:detect_lsp_client()
 
 	if copilot_lua_clients and copilot_lua_clients[1] then
 		self.client = copilot_lua_clients[1]
+		local ok, clt = pcall(require, "copilot.client")
 		self.is_copilot_enabled = function()
-			local ok, clt = pcall(require, "copilot.client")
 			return ok and clt and not clt.is_disabled()
 		end
+
 		return
 	end
 
