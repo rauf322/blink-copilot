@@ -388,4 +388,4 @@ MIT
 [blink-cmp-github]: https://github.com/Saghen/blink.cmp
 [cmp-copilot-github]: https://github.com/hrsh7th/cmp-copilot
 [copilot-cmp-github]: https://github.com/zbirenbaum/copilot-cmp
-[blink-cmp-copilot-github]: https://github.com/giuxtaposition/blink-cmp-copilothttps://github.com/user-attachments/assets/06330b50-2386-4fc1-8dbd-8040ec4cb2df
+[blink-cmp-copilot-github]: https://github.com/giuxtaposition/blink-cmp-copilot
