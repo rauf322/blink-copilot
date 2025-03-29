@@ -28,7 +28,7 @@ end
 
 ---Detect the LSP client
 function M:detect_lsp_client()
-	if self.client and not self.client.is_stopped() then
+	if self.client and not self.client:is_stopped() then
 		return
 	end
 
