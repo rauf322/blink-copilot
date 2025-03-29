@@ -20,7 +20,7 @@ function M.get_lsp_params()
 	return vim.tbl_deep_extend("force", vim.lsp.util.make_position_params(0, "utf-16"), {
 		formattingOptions = {
 			insertSpaces = vim.bo.expandtab,
-			tabSize = vim.bo.shiftwidth,
+			tabSize = vim.fn.shiftwidth(),
 		},
 		context = {
 			triggerKind = trigger_kind.inline_automatic,
