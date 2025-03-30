@@ -11,7 +11,7 @@ local trigger_kind = {
 ---@param req_id integer?
 function M.cancel_request(client, req_id)
 	if client and req_id then
-		client.cancel_request(req_id)
+		client:cancel_request(req_id)
 	end
 end
 
@@ -44,7 +44,7 @@ end
 ---@param params table
 ---@param cb lsp.Handler
 function M.get_completions_from_lsp(client, params, cb)
-	return client.request("textDocument/inlineCompletion", params, cb)
+	return client:request("textDocument/inlineCompletion", params, cb)
 end
 
 ---Recalculate the length of the first line of the text
@@ -159,7 +159,7 @@ end
 ---@return integer timestamp
 function M.timestamp()
 	---@diagnostic disable-next-line: undefined-field
-	return math.floor(vim.loop.hrtime() / 1e6)
+	return math.floor(vim.uv.hrtime() / 1e6)
 end
 
 return M

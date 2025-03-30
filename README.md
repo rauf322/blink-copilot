@@ -34,7 +34,7 @@
 
 ## 📋 Requirements
 
-- Neovim >= 0.9.0
+- Neovim >= 0.11.0
 - GitHub Copilot LSP Provider (choose one of the following)
   - [copilot.vim][copilot-vim-github] - Official GitHub Copilot Vim/Neovim Plugin
   - [copilot.lua][copilot-lua-github] - Third-party GitHub Copilot written in Lua
