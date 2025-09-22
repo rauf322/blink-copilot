@@ -139,34 +139,10 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
 
 ### With 💤 LazyVim [copilot][lazyvim-copilot-extra] extra
 
-<details>
-<summary><code>blink-cmp-copilot</code> ➡️ <code>blink-copilot</code></summary>
-
 ```lua
 -- Import copilot extra (you can also use `:LazyExtras` to install it)
 { import = "lazyvim.plugins.extras.ai.copilot" },
-
--- Source replacement
-{
-  "giuxtaposition/blink-cmp-copilot",
-  enabled = false,
-},
-{
-  "saghen/blink.cmp",
-  dependencies = { "fang2hou/blink-copilot" },
-  opts = {
-    sources = {
-      providers = {
-        copilot = {
-          module = "blink-copilot",
-        },
-      },
-    },
-  },
-}
 ```
-
-</details>
 
 <details>
 <summary><i>(Optional)</i><code>copilot.lua</code> ➡️ <code>copilot.vim</code></summary>
