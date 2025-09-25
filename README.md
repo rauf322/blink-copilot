@@ -38,6 +38,8 @@
 - GitHub Copilot LSP Provider (choose one of the following)
   - [copilot.vim][copilot-vim-github] - Official GitHub Copilot Vim/Neovim Plugin
   - [copilot.lua][copilot-lua-github] - Third-party GitHub Copilot written in Lua
+  - [copilot-lsp][copilot-lsp-github] - Native GitHub Copilot LSP client support
+    - It also provides a better experience for Copilot's NES feature.
 
 ## 🌟 Features
 
@@ -129,6 +131,75 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
           score_offset = 100,
           async = true,
         },
+      },
+    },
+  },
+}
+```
+
+</details>
+
+<details>
+<summary><code>blink-copilot</code> + <code>copilotlsp-nvim/copilot-lsp</code></summary>
+
+You can check the [official documentation][copilot-lsp-github].
+
+```lua
+{
+  "copilotlsp-nvim/copilot-lsp",
+  init = function()
+    vim.g.copilot_nes_debounce = 500
+    vim.lsp.enable("copilot_ls")
+    vim.keymap.set("n", "<tab>", function()
+      local bufnr = vim.api.nvim_get_current_buf()
+      local state = vim.b[bufnr].nes_state
+      if state then
+        local _ = require("copilot-lsp.nes").walk_cursor_start_edit()
+          or (
+            require("copilot-lsp.nes").apply_pending_nes()
+            and require("copilot-lsp.nes").walk_cursor_end_edit()
+          )
+        return nil
+      else
+        return "<C-i>"
+      end
+    end, { desc = "Accept Copilot NES suggestion", expr = true })
+  end,
+}
+{
+  "saghen/blink.cmp",
+  dependencies = { "fang2hou/blink-copilot" },
+  opts = {
+    sources = {
+      default = { "copilot" },
+      providers = {
+        copilot = {
+          name = "copilot",
+          module = "blink-copilot",
+          score_offset = 100,
+          async = true,
+        },
+      },
+    },
+    keymap = {
+      preset = "super-tab",
+      ["<Tab>"] = {
+        function(cmp)
+          if vim.b[vim.api.nvim_get_current_buf()].nes_state then
+            cmp.hide()
+            return (
+              require("copilot-lsp.nes").apply_pending_nes()
+              and require("copilot-lsp.nes").walk_cursor_end_edit()
+            )
+          end
+          if cmp.snippet_active() then
+            return cmp.accept()
+          else
+            return cmp.select_and_accept()
+          end
+        end,
+        "snippet_forward",
+        "fallback",
       },
     },
   },
@@ -360,6 +431,7 @@ MIT
 [copilot-icon-image]: https://github.com/user-attachments/assets/06330b50-2386-4fc1-8dbd-8040ec4cb2df
 [copilot-vim-github]: https://github.com/github/copilot.vim
 [copilot-lua-github]: https://github.com/zbirenbaum/copilot.lua
+[copilot-lsp-github]: https://github.com/copilotlsp-nvim/copilot-lsp
 [lazyvim-copilot-extra]: https://www.lazyvim.org/extras/ai/copilot
 [lazy-nvim-github]: https://github.com/folke/lazy.nvim
 [blink-cmp-github]: https://github.com/Saghen/blink.cmp
