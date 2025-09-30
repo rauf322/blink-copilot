@@ -36,6 +36,7 @@
 
 - Neovim >= 0.11.0
 - GitHub Copilot LSP Provider (choose one of the following)
+  - [Copilot Language Server][copilot-language-server] - Official GitHub Copilot LSP client
   - [copilot.vim][copilot-vim-github] - Official GitHub Copilot Vim/Neovim Plugin
   - [copilot.lua][copilot-lua-github] - Third-party GitHub Copilot written in Lua
   - [copilot-lsp][copilot-lsp-github] - Native GitHub Copilot LSP client support
@@ -55,6 +56,29 @@
 ## 🥘 Recipes
 
 Here are some example configuration for using `blink-copilot` with [lazy.nvim][lazy-nvim-github].
+
+<details>
+<summary><code>blink-copilot</code> + <code>Copilot Language Server</code></summary>
+
+Sign in to Copilot, or use the `:LspCopilotSignIn` command from <https://github.com/neovim/nvim-lspconfig>.
+
+```lua
+{
+  "neovim/nvim-lspconfig",
+  opts = {
+    servers = {
+      copilot = {},
+    },
+  },
+},
+{
+  -- If you are using mason.nvim, you can install copilot-language-server automatically
+  "mason-org/mason.nvim",
+  opts = { ensure_installed = { "copilot-language-server" } },
+},
+```
+
+</details>
 
 <details>
 <summary><code>blink-copilot</code> + <code>zbirenbaum/copilot.lua</code></summary>
@@ -214,6 +238,31 @@ You can check the [official documentation][copilot-lsp-github].
 -- Import copilot extra (you can also use `:LazyExtras` to install it)
 { import = "lazyvim.plugins.extras.ai.copilot" },
 ```
+
+<details>
+<summary><i>(Optional)</i><code>copilot.lua</code> ➡️ <code>Copilot Language Server</code></summary>
+
+```lua
+{
+  "zbirenbaum/copilot.lua",
+  enabled = false,
+},
+{
+  "neovim/nvim-lspconfig",
+  opts = {
+    servers = {
+      -- LazyVim Extra disabled it for copilot.lua
+      copilot = { enabled = true },
+    },
+  },
+},
+{
+  "mason-org/mason.nvim",
+  opts = { ensure_installed = { "copilot-language-server" } },
+},
+```
+
+</details>
 
 <details>
 <summary><i>(Optional)</i><code>copilot.lua</code> ➡️ <code>copilot.vim</code></summary>
@@ -429,6 +478,7 @@ MIT
 
 [title-image]: https://github.com/user-attachments/assets/dbe4dee4-811f-4f46-be89-4d58dfea9433
 [copilot-icon-image]: https://github.com/user-attachments/assets/06330b50-2386-4fc1-8dbd-8040ec4cb2df
+[copilot-language-server]: https://github.com/github/copilot-language-server-release
 [copilot-vim-github]: https://github.com/github/copilot.vim
 [copilot-lua-github]: https://github.com/zbirenbaum/copilot.lua
 [copilot-lsp-github]: https://github.com/copilotlsp-nvim/copilot-lsp
