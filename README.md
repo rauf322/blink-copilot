@@ -60,23 +60,55 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
 <details>
 <summary><code>blink-copilot</code> + <code>Copilot Language Server</code></summary>
 
-Sign in to Copilot, or use the `:LspCopilotSignIn` command from <https://github.com/neovim/nvim-lspconfig>.
+**Installation Steps:**
+
+1. Install the Copilot Language Server via Mason:
+   - Open Neovim and run `:Mason`
+   - Search for `copilot` and install it
+   - Or use `:LspInstall copilot` to install it directly
+
+2. Sign in to Copilot:
+   - Run `:Copilot auth` or follow the authentication flow when first using Copilot
+
+**Configuration:**
 
 ```lua
 {
-  "neovim/nvim-lspconfig",
+  -- Install mason-lspconfig to manage LSP servers
+  "williamboman/mason-lspconfig.nvim",
   opts = {
-    servers = {
-      copilot = {},
+    ensure_installed = {
+      "copilot", -- Note: The package name is now just "copilot", not "copilot-language-server"
     },
+  },
+  dependencies = {
+    "williamboman/mason.nvim",
   },
 },
 {
-  -- If you are using mason.nvim, you can install copilot-language-server automatically
-  "mason-org/mason.nvim",
-  opts = { ensure_installed = { "copilot-language-server" } },
+  "saghen/blink.cmp",
+  dependencies = { "fang2hou/blink-copilot" },
+  opts = {
+    sources = {
+      default = { "lsp", "path", "snippets", "buffer", "copilot" },
+      providers = {
+        copilot = {
+          name = "copilot",
+          module = "blink-copilot",
+          async = true,
+        },
+      },
+    },
+  },
 },
 ```
+
+**Important Notes:**
+
+- Use `mason-lspconfig.nvim` to install LSP servers, not `mason.nvim` directly
+- The package name in Mason is `copilot`, not `copilot-language-server`
+- You don't need to configure `nvim-lspconfig` servers manually - `blink-copilot` handles the LSP integration automatically
+- The Copilot Language Server will be available after installation through Mason
 
 </details>
 
