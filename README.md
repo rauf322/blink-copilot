@@ -68,7 +68,7 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
    - Or use `:LspInstall copilot` to install it directly
 
 2. Sign in to Copilot:
-   - Run `:Copilot auth` or follow the authentication flow when first using Copilot
+   - Run `:LspCopilotSignIn` to sign in
 
 **Configuration:**
 
@@ -78,7 +78,7 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
   "williamboman/mason-lspconfig.nvim",
   opts = {
     ensure_installed = {
-      "copilot", -- Note: The package name is now just "copilot", not "copilot-language-server"
+      "copilot"
     },
   },
   dependencies = {
