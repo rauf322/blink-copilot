@@ -64,7 +64,7 @@ Sign in to Copilot, or use the :LspCopilotSignIn command from https://github.com
 
 ---
 
-**Option 1: Mason-lspconfig **
+**Option 1: Mason-lspconfig**
 
 <details>
 <summary>Using <code>mason-lspconfig.nvim</code> (simpler)</summary>
