@@ -70,20 +70,22 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
 2. Sign in to Copilot:
    - Run `:LspCopilotSignIn` to sign in
 
-**Configuration:**
+---
+
+**Option 1: Automatic Setup (Recommended)**
+
+<details>
+<summary>Using <code>mason-lspconfig.nvim</code> (simpler)</summary>
+
+This approach automatically handles the LSP server setup for you.
 
 ```lua
 {
-  -- Install mason-lspconfig to manage LSP servers
   "williamboman/mason-lspconfig.nvim",
   opts = {
-    ensure_installed = {
-      "copilot"
-    },
+    ensure_installed = { "copilot" },
   },
-  dependencies = {
-    "williamboman/mason.nvim",
-  },
+  dependencies = { "williamboman/mason.nvim" },
 },
 {
   "saghen/blink.cmp",
@@ -103,11 +105,57 @@ Here are some example configuration for using `blink-copilot` with [lazy.nvim][l
 },
 ```
 
+</details>
+
+---
+
+**Option 2: Manual Setup**
+
+<details>
+<summary>Using <code>mason.nvim</code> + <code>nvim-lspconfig</code> (more control)</summary>
+
+This approach gives you more control over the LSP configuration.
+
+```lua
+{
+  "neovim/nvim-lspconfig",
+  opts = {
+    servers = {
+      copilot = {},
+    },
+  },
+},
+{
+  "mason-org/mason.nvim",
+  opts = { ensure_installed = { "copilot" } },
+},
+{
+  "saghen/blink.cmp",
+  dependencies = { "fang2hou/blink-copilot" },
+  opts = {
+    sources = {
+      default = { "lsp", "path", "snippets", "buffer", "copilot" },
+      providers = {
+        copilot = {
+          name = "copilot",
+          module = "blink-copilot",
+          async = true,
+        },
+      },
+    },
+  },
+},
+```
+
+</details>
+
+---
+
 **Important Notes:**
 
-- Use `mason-lspconfig.nvim` to install LSP servers, not `mason.nvim` directly
 - The package name in Mason is `copilot`, not `copilot-language-server`
-- You don't need to configure `nvim-lspconfig` servers manually - `blink-copilot` handles the LSP integration automatically
+- `blink-copilot` handles the LSP integration automatically - you don't need additional LSP configuration
+- Choose Option 1 for simplicity, Option 2 for more control over LSP settings
 - The Copilot Language Server will be available after installation through Mason
 
 </details>
@@ -290,7 +338,7 @@ You can check the [official documentation][copilot-lsp-github].
 },
 {
   "mason-org/mason.nvim",
-  opts = { ensure_installed = { "copilot-language-server" } },
+  opts = { ensure_installed = { "copilot" } },
 },
 ```
 
